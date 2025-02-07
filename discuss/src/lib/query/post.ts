@@ -12,28 +12,41 @@ export const fetchPostbyTopicSlug = async (
 ): Promise<PostWithData[]> => {
   return prisma.post.findMany({
     where: {
-      topic: {slug}
+      topic: { slug },
     },
     include: {
       topic: { select: { slug: true } },
       _count: { select: { comments: true } },
-      user: { select: { name: true}}
-    }
-  })
+      user: { select: { name: true } },
+    },
+  });
 };
 
-export const fetchTopPost = async (): Promise<PostWithData[]> =>{
+export const fetchTopPost = async (): Promise<PostWithData[]> => {
   return prisma.post.findMany({
-    orderBy:[
+    orderBy: [
       {
-        comments:{_count:'desc'}
-      }
+        comments: { _count: "desc" },
+      },
     ],
     include: {
       topic: { select: { slug: true } },
       _count: { select: { comments: true } },
-      user: { select: { name: true}}
+      user: { select: { name: true } },
     },
-    take:5
-  })
-}
+    take: 5,
+  });
+};
+
+export const fetchPostBySearch = async (term: string): Promise<PostWithData[]> => {
+  return prisma.post.findMany({
+    include: {
+      topic: { select: { slug: true } },
+      _count: { select: { comments: true } },
+      user: { select: { name: true } },
+    },
+    where: {
+      OR: [{ title: { contains: term } }, { content: { contains: term } }],
+    },
+  });
+};
