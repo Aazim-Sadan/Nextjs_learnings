@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-export default function SignupPage() {
+export default function LoginPage() {
 
   const router = useRouter()
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -15,16 +15,15 @@ export default function SignupPage() {
 
   const [user, setUser] = useState({
     email: "",
-    password: "",
-    username: ""
+    password: ""
   })
 
-  const onSignUp = async () => {
+  const onLogin = async () => {
     try {
       setLoading(true)
-      const response = await axios.post("/api/users/signup", user)
-      console.log("Signup success", response.data);
-      router.push('/login')
+      const response = await axios.post("/api/users/login", user)
+      console.log("Login success", response.data);
+      router.push('/profile')
 
     } catch (error: any) {
       setLoading(false)
@@ -34,7 +33,7 @@ export default function SignupPage() {
   }
 
   useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
+    if (user.email.length > 0 && user.password.length > 0 ) {
       setButtonDisabled(false)
     } else {
       setButtonDisabled(true)
@@ -43,16 +42,7 @@ export default function SignupPage() {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen py-2'>
-      <h1>{loading ? "Processing" : "Signup"}</h1>
-      <label htmlFor="username">username</label>
-      <input
-        className='b-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600'
-        id='username'
-        value={user.username}
-        onChange={(e) => setUser({ ...user, username: e.target.value })}
-        placeholder='username'
-        type="text"
-      />
+      <h1>{loading ? "Processing" : "Login"}</h1>
       <label htmlFor="username">email</label>
       <input
         className='b-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600'
@@ -72,12 +62,12 @@ export default function SignupPage() {
         type="password"
       />
       <button
-        onClick={onSignUp}
+        onClick={onLogin}
         className='p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600'
       >
-        {buttonDisabled ? "No signup" : "Signup"}
+        {buttonDisabled ? "No login" : "Login"}
       </button>
-      <Link href={"/login"}>Visit Login Page</Link >
+      <Link href={"/signup"}>Visit Signup Page</Link >
 
     </div>
   )
