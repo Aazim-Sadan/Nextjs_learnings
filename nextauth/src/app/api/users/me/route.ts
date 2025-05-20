@@ -13,15 +13,17 @@ export async function POST(request: NextRequest) {
 
       const user = await User.findOne({ _id: userId }).select("-password");
 
-      if(!user){
-        return NextResponse.json({message: "User not found"},{ status: 400})
+      if (!user) {
+        return NextResponse.json(
+          { message: "User not found" },
+          { status: 400 }
+        );
       }
 
       return NextResponse.json({
         message: "User found",
-        date: user
-      })
-
+        data: user,
+      });
     } catch (error: any) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
