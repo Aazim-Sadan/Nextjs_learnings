@@ -29,7 +29,6 @@ export async function POST(request: Request) {
 
     if (existingUserByEmail) {
 
-
       if (existingUserByEmail.isVerified) {
         return Response.json(
           {
@@ -45,8 +44,6 @@ export async function POST(request: Request) {
         existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
         await existingUserByEmail.save();
       }
-
-
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const expiryDate = new Date();
@@ -65,7 +62,6 @@ export async function POST(request: Request) {
 
       await newUser.save();
     }
-
 
     // send verification email
     const emailResponse = await sendVerificationEmail(
@@ -91,8 +87,6 @@ export async function POST(request: Request) {
       },
       { status: 201 }
     );
-
-    
   } catch (error) {
     console.error("Error registering user", error);
     return Response.json(

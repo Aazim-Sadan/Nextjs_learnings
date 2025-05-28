@@ -7,13 +7,9 @@ import { useEffect, useState } from "react"
 import { useDebounceCallback } from 'usehooks-ts'
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { signUpSchema } from "@/schemas/signUpSchema"
-import axios, { AxiosError } from "axios"
-import { ApiResponse } from "@/types/ApiResponese"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
 import { sginInSchema } from "@/schemas/signInSchema"
 import { signIn } from "next-auth/react"
 
@@ -110,7 +106,7 @@ const page = () => {
           <p>
             Already a member?{' '}
             <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
-              Sign in
+              Sign up
             </Link>
           </p>
         </div>
